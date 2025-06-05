@@ -18,14 +18,24 @@
 
     nav {
         background-color: aquamarine;
+        position: sticky;
+        top: 0px;
+        z-index: 2;
     }
+
 
     #Intro {
         background-color: lightpink;
+        font-family: Arial, Helvetica, Sans-serif;
+        text-align: center
     }
+
+
 
     .main-section-content h2 {
         background-color: darkkhaki;
+        font-family: Arial, Helvetica, Sans-serif;
+        text-align: center
     }
 
     #bestsellers {
@@ -42,6 +52,9 @@
 
     header h1 {
         color: white;
+        font: size 50px;
+        font-family: Arial, Helvetica, Sans-serif;
+        margin: 30px;
     }
 
     h2,
@@ -62,18 +75,39 @@
     span {
         color: blue;
     }
+
     footer p:first-child span {
         color: red;
     }
-    .teacher-info{
+
+    .teacher-info {
         border-radius: 1px solid black;
         border-radius: 5px;
-    }
-    button{
-        background-color: red;
-        color: white;
+        margin: 10px;
+        width: 400px;
+        box-shadow: 6px 0px 21px -3px;
     }
 
+    button {
+        background-color: red;
+        color: white;
+        font: size 20px;
+        font: width bold;
+        padding: 5px;
+        border-radius: 5px;
+        border: none;
+        position: fixed;
+        right: 50px;
+        bottom: 40px;
+
+        #book-reviews p,
+        book-reviews h3 {
+            position: relative;
+            left: 40%;
+            width: 400px;
+        }
+
+    }
 </style>
 
 <body>
@@ -95,7 +129,16 @@
             <li><a href="">Reading Groups</a></li>
             <li><a href="">Contact Us</a></li>
 
-        </ul>
+        </ul>{
+        list-style-type: none;
+        }
+        li a{
+        text-decoration: none;
+        color:#333333
+        font-zize: 20px;
+        font-width: 300px;
+        }
+
 
     </nav>
     <!-- Intro -->
@@ -118,9 +161,9 @@
     <img src="./teacher 1.jpg" alt="teacher image" width="100">
 
     <!-- Content 2 -->
-    <div>
+    <div id="book-reviews" class="main-section-content">
         <h2>Book Review</h2>
-        <h3>Alice in Wander Land</h3>
+        <h3>Reviews</h3>
         <p><strong>Amit:</strong> <q>I really enjoyed this book and I am recommanding others this book too.</q> </p>
         <p><strong>Shovon:</strong> <q>I really enjoyed this book.</q> </p>
         <!-- Opening time -->
