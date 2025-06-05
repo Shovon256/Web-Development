@@ -1,234 +1,560 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Mount Caramel Book Club</title>
-</head>
 
-<style>
-    body {
-        background-color: #eeeeee;
-    }
+    <style>
+        body {
 
-    header {
-        background-color: brown;
-    }
+            background-color: #eeeeee;
 
-    nav {
-        background-color: aquamarine;
-        position: sticky;
-        top: 0px;
-        z-index: 2;
-    }
-
-
-    #Intro {
-        background-color: lightpink;
-        font-family: Arial, Helvetica, Sans-serif;
-        text-align: center
-    }
-
-
-
-    .main-section-content h2 {
-        background-color: darkkhaki;
-        font-family: Arial, Helvetica, Sans-serif;
-        text-align: center
-    }
-
-    #bestsellers {
-        background-color: lightyellow;
-    }
-
-    header,
-    nav,
-    #intro,
-    #bestsellers,
-    footer {
-        border-radius: 1px solid black;
-    }
-
-    header h1 {
-        color: white;
-        font: size 50px;
-        font-family: Arial, Helvetica, Sans-serif;
-        margin: 30px;
-    }
-
-    h2,
-    p {
-        color: #333333;
-    }
-
-    table,
-    th,
-    td {
-        border-radius: 1px solid black;
-    }
-
-    tr:last-child {
-        color: red;
-    }
-
-    span {
-        color: blue;
-    }
-
-    footer p:first-child span {
-        color: red;
-    }
-
-    .teacher-info {
-        border-radius: 1px solid black;
-        border-radius: 5px;
-        margin: 10px;
-        width: 400px;
-        box-shadow: 6px 0px 21px -3px;
-    }
-
-    button {
-        background-color: red;
-        color: white;
-        font: size 20px;
-        font: width bold;
-        padding: 5px;
-        border-radius: 5px;
-        border: none;
-        position: fixed;
-        right: 50px;
-        bottom: 40px;
-
-        #book-reviews p,
-        book-reviews h3 {
-            position: relative;
-            left: 40%;
-            width: 400px;
         }
 
-    }
-</style>
+        header {
+
+            background-color: brown;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+        nav {
+
+            background-color: aquamarine;
+
+            position: sticky;
+
+            top: 0px;
+
+            z-index: 2;
+
+            display: flex;
+
+            justify-content: center;
+
+        }
+
+        #intro {
+
+            background-color: lightpink;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            text-align: center;
+
+        }
+
+        .main-section-content h2 {
+
+            background-color: darkkhaki;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            padding: 5px;
+
+            font-size: 24px;
+
+            text-align: center;
+
+            margin-bottom: 50px;
+
+        }
+
+        #bestsellers,
+
+        footer {
+
+            background-color: lightyellow;
+
+        }
+
+        header,
+
+        nav,
+
+        #intro,
+
+        #bestsellers,
+
+        #main-section,
+
+        footer {
+
+            border: 1px solid black;
+
+        }
+
+        header,
+
+        nav,
+
+        #main-section {
+
+            border-radius: 10px;
+
+        }
+
+        header h1 {
+
+            color: white;
+
+            font-size: 50px;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            margin: 30px;
+
+        }
+
+        h2,
+
+        p {
+
+            color: #333333;
+
+        }
+
+        table,
+
+        th,
+
+        td {
+
+            border: 1px solid black;
+
+        }
+
+        tr:last-child {
+
+            color: red;
+
+        }
+
+        span {
+
+            color: blue;
+
+        }
+
+        footer p:first-child span {
+
+            color: red;
+
+        }
+
+        .teacher-info {
+
+            border: 1px solid black;
+
+            border-radius: 5px;
+
+            margin: 10px;
+
+            width: 400px;
+
+            box-shadow: 6px 0px 21px -3px #333333;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+        button {
+
+            background-color: red;
+
+            color: white;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            padding: 5px;
+
+            border-radius: 5px;
+
+            border: none;
+
+            position: fixed;
+
+            right: 50px;
+
+            bottom: 40px;
+
+        }
+
+        ul {
+
+            list-style-type: none;
+
+        }
+
+        li a {
+
+            text-decoration: none;
+
+            color: #333333;
+
+            font-size: 20px;
+
+            font-weight: 600;
+
+        }
+
+        li a:hover {
+
+            color: red;
+
+        }
+
+        p {
+
+            font-size: 18px;
+
+        }
+
+        h3 {
+
+            font-size: 20px;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            text-decoration: underline;
+
+        }
+
+        nav li {
+
+            margin: 10px;
+
+            padding: 5px;
+
+            border: 1px solid;
+
+            border-radius: 5px;
+
+        }
+
+        .teacher-info div:last-child {
+
+            margin-left: 50px;
+
+        }
+
+        .main-section-content {
+
+            padding: 20px;
+
+        }
+
+        table {
+
+            margin: auto;
+
+        }
+
+        th,
+
+        td {
+
+            padding: 10px;
+
+        }
+
+        footer {
+
+            padding: 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+        #bestsellers h2 {
+
+            padding: 20px;
+
+        }
+
+        ol li {
+
+            margin-bottom: 20px;
+
+        }
+
+        #book-reviews p,
+
+        #book-reviews h3 {
+
+            position: relative;
+
+            left: 40%;
+
+            width: 400px;
+
+        }
+
+        #teacher {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+        nav ul {
+
+            display: flex;
+
+            justify-content: space-between;
+
+        }
+    </style>
+
+</head>
 
 <body>
+
     <header>
-        <!-- Heading  -->
-        <h1> Mount Caramel Book Club </h1>
+
+        <!-- Heading -->
+
+        <h1> Mount Caramel Book club again </h1>
 
         <!-- image -->
 
-        <img src="./bokks.webp" alt="Book image" width=300 px>
+        <img src="./books.jpg" alt="book image" width="300">
+
     </header>
 
     <!-- navbar -->
 
     <nav>
+
         <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">Online Resuorce</a></li>
-            <li><a href="">Reading Groups</a></li>
-            <li><a href="">Contact Us</a></li>
 
-        </ul>{
-        list-style-type: none;
-        }
-        li a{
-        text-decoration: none;
-        color:#333333
-        font-zize: 20px;
-        font-width: 300px;
-        }
+            <li><a href=""> Home </a></li>
 
+            <li><a href=""> Online Resource </a></li>
+
+            <li><a href=""> Reading Groups </a></li>
+
+            <li><a href=""> Contact Us </a></li>
+
+        </ul>
 
     </nav>
-    <!-- Intro -->
-    <div id="Intro">
-        <!-- Heading  -->
-        <h1> Mount Caramel Book Club </h1>
+
+    <!-- intro -->
+
+    <div id="intro">
+
+        <h2>Welcome to the Mount Caramel Book Club. </h2>
+
+        <p>Mount Caramel Book Club is an online book club from mount caramel school.</p>
 
     </div>
-    <!-- Content 1 -->
-    <div>
-        <h3>meet our teachers</h3>
-        <h3>Ms Emma</h3>
-        <p>She teaches elementary school kids and she has a bachelor's degree in elementary education </p>
 
-        <img src="./teacher 2.jpg" alt="teacher image2" width=100>
-        <h3>Ms Caroline</h3>
-        <p>She teaches High school kids and she has a bachelor's degree in <i>Art's</i></p>
-    </div>
+    <!-- content 1 -->
 
-    <img src="./teacher 1.jpg" alt="teacher image" width="100">
+    <div id="main-section">
 
-    <!-- Content 2 -->
-    <div id="book-reviews" class="main-section-content">
-        <h2>Book Review</h2>
-        <h3>Reviews</h3>
-        <p><strong>Amit:</strong> <q>I really enjoyed this book and I am recommanding others this book too.</q> </p>
-        <p><strong>Shovon:</strong> <q>I really enjoyed this book.</q> </p>
+        <div class="main-section-content">
+
+            <h2> Meet our teachers </h2>
+
+            <div id="teacher">
+
+                <div class="teacher-info">
+
+                    <div>
+
+                        <img src="./book_club_image_girl.jpeg" alt="girl image" width="100">
+
+                    </div>
+
+                    <div>
+
+                        <h3>Ms. Emma</h3>
+
+                        <p>She teaches elementary school kids and she has a bachelor's degree in elementary education
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="teacher-info">
+
+                    <div>
+
+                        <img src="./book_club_image_girl_2.jpg" alt="girl image" width="100">
+
+                    </div>
+
+                    <div>
+
+                        <h3>Ms. Caroline</h3>
+
+                        <p>She teaches High school kids and she has a bachelor's degree in <i>Art's</i> </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- content 2 -->
+
+        <div id="book-reviews" class="main-section-content">
+
+            <h2>Book Review</h2>
+
+            <h3>Alice in Wander Land</h3>
+
+            <p><strong>Amit:</strong> <q>I really loved this book a lot and I am recommending others too.</q> </p>
+
+            <p><strong>Sagnik</strong> <q>this book is a must try things.</q> </p>
+
+        </div>
+
+        <!-- video -->
+
+        <div id="video" class="main-section-content">
+
+            <h2>Reload Videos</h2>
+
+            <video width="400" height="218" controls autoplay>
+
+                <source src="./Chhorii (2021) Hindi 720p AMZN WEB-DL x265 HEVC DD+5.1 - 750MB ESubs - ItsMyRip.mkv"
+                    type="video/mp4">
+
+            </video>
+
+        </div>
+
         <!-- Opening time -->
 
-        <h2>reload video</h2>
+        <div class="main-section-content">
 
-        <video> width= "400" height="218" controls autoplay
-            <source src="./The Power Of Silence_ Make Everything Flow In Your Favor (Audiobook).mp4w" type="video/mp4">
-        </video>
-
-        <div class="main-section-content ">
-            <h2>Opening time</h2>
+            <h2>Opening Time</h2>
 
             <table>
+
                 <tr>
+
                     <th>Monday</th>
-                    <td>11:00am - 4:00pm</td>
+
+                    <td>11 am - 3 pm</td>
+
                 </tr>
+
                 <tr>
+
                     <th>Tuesday</th>
-                    <td>11:00am - 4:00pm</td>
+
+                    <td>11 am - 3 pm</td>
+
                 </tr>
+
                 <tr>
-                    <th>Wednessday</th>
-                    <td>11:00am - 4:00pm</td>
+
+                    <th>Wednesday</th>
+
+                    <td>11 am - 3 pm</td>
+
                 </tr>
+
                 <tr>
+
                     <th>Thursday</th>
-                    <td>11:00am - 4:00pm</td>
+
+                    <td>11 am - 3 pm</td>
+
                 </tr>
+
                 <tr>
+
                     <th>Friday</th>
-                    <td>11:00am - 1:00pm</td>
+
+                    <td>11 am - 1 pm</td>
+
                 </tr>
+
                 <tr>
-                    <th>Satarday</th>
-                    <td>11:00am - 1:00pm</td>
+
+                    <th>Saturday</th>
+
+                    <td>11 am - 1 pm</td>
+
                 </tr>
+
                 <tr>
+
                     <th>Sunday</th>
-                    <td>Closed
-                    </td>
+
+                    <td>Closed</td>
+
                 </tr>
+
             </table>
 
         </div>
+
+        <!-- Best Selling Books -->
+
         <div id="bestsellers">
-            <!-- Best selling books -->
-            <h2>Best seller book</h2>
+
+            <h2>Best Seller Book</h2>
+
             <b>Angels and Demons</b> by <em>Dan Brown</em>
-            <b>A Tale of Two Cities</b> by <em>Charles Dickens</em>
-            <b>The Little Prince</b> by <em>Antoine de Saint-Exupéry</em>
-            <b>The Alchemist</b> by <em>Paulo Coelho</em>
-            <b>Harry Potter and the Philosopher's Stone </b> by <em>J. K. Rowling</em>
+
+            <b>Pear Maiden</b> by <em>Henry Ridder Hagard</em>
+
+            <b>Misir Ali</b> by <em>Humayun Ahmed</em>
+
+            <b>KaKa Babu</b> by <em>Sunil Gongopadday</em>
+
         </div>
 
         <!-- Contact info -->
+
         <footer>
-            <p><span>Contact us :</span> Labib Hasan Shovon </p>
-            <p><span>Mobile</span> : +8801980441105</p>
-            <address>Motiakhali, Shipyeard, Khulna</address>
+
+            <p><span>Contact us :</span> Riziya Akter Keya </p>
+
+            <p> <span>Phone no :</span> +8801232343253425</p>
+
+            <address>nikunja-2, khilkhet, Dhaka</address>
 
         </footer>
+
         <button>Enquiry</button>
+
     </div>
+
 </body>
 
 </html>
