@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mount Caramel Book Club</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #3b0764, #6d28d9);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .btn-primary {
+            @apply bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition;
+        }
+
+        .card {
+            @apply bg-purple-800 rounded-2xl p-6 shadow-lg;
+        }
+    </style>
+</head>
+
+<body class="text-white">
+
+    <!-- Navigation -->
+    <header class="bg-purple-900 shadow-lg p-6 flex justify-between items-center">
+        <h1 class="text-3xl font-bold">📚 Mount Caramel Book Club</h1>
+        <nav class="space-x-6">
+            <button onclick="showSection('home')" id="nav-home">Home</button>
+            <button onclick="showSection('books')" id="nav-books">Books</button>
+            <button onclick="showSection('login')" id="nav-login">Login/Register</button>
+            <button onclick="showSection('dashboard')" id="nav-dashboard">Dashboard</button>
+            <button onclick="showSection('events')" id="nav-events">Events</button>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main class="p-6 space-y-12">
+
+        <!-- Home Section -->
+        <section id="home" class="active">
+            <h2 class="text-4xl font-extrabold mb-6 text-center">Welcome to the Club!</h2>
+            <p class="text-center max-w-2xl mx-auto text-lg text-purple-200">
+                Dive into stories, meet fellow readers, and share your passion for books with the Mount Caramel
+                community.
+            </p>
+        </section>
+
+        <!-- Books Section -->
+        <section id="books" class="hidden">
+            <h2 class="text-4xl font-extrabold mb-10 text-center">Books</h2>
+            <div class="grid md:grid-cols-3 gap-10">
+                <div onclick="showBookDetail('The Midnight Library', 'Matt Haig', 'A story about exploring the lives we could have lived and the infinite possibilities of choices.')"
+                    class="card cursor-pointer hover:bg-purple-700">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/81XRGWfoThL.jpg"
+                        alt="The Midnight Library" class="rounded-xl mb-4 mx-auto max-h-72 object-cover">
+                    <h4 class="text-2xl font-semibold">The Midnight Library</h4>
+                    <p class="text-purple-300">By Matt Haig</p>
+                </div>
+                <div onclick="showBookDetail('Circe', 'Madeline Miller', 'An epic tale of the enchantress Circe, blending mythology and modern storytelling.')"
+                    class="card cursor-pointer hover:bg-purple-700">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/91trOvjL+QL.jpg" alt="Circe"
+                        class="rounded-xl mb-4 mx-auto max-h-72 object-cover">
+                    <h4 class="text-2xl font-semibold">Circe</h4>
+                    <p class="text-purple-300">By Madeline Miller</p>
+                </div>
+                <div onclick="showBookDetail('Project Hail Mary', 'Andy Weir', 'A gripping sci-fi adventure about survival and discovery in space.')"
+                    class="card cursor-pointer hover:bg-purple-700">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/81TqNxDmyBL.jpg" alt="Project Hail Mary"
+                        class="rounded-xl mb-4 mx-auto max-h-72 object-cover">
+                    <h4 class="text-2xl font-semibold">Project Hail Mary</h4>
+                    <p class="text-purple-300">By Andy Weir</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Book Detail Page -->
+        <section id="bookDetail" class="hidden">
+            <div class="text-center">
+                <img id="bookImage" src="" alt="Book Cover" class="mx-auto w-64 rounded-xl mb-6">
+                <h2 id="bookTitle" class="text-4xl font-bold mb-2"></h2>
+                <h3 id="bookAuthor" class="text-2xl text-purple-300 mb-4"></h3>
+                <p id="bookDescription" class="max-w-xl mx-auto text-purple-200 text-lg"></p>
+                <button onclick="showSection('books')" class="btn-primary mt-6">← Back to Books</button>
+            </div>
+        </section>
+
+        <!-- Login/Register -->
+        <section id="login" class="hidden">
+            <div class="max-w-xl mx-auto bg-purple-800 p-8 rounded-2xl shadow-xl">
+                <div class="flex justify-around mb-6">
+                    <button onclick="toggleAuth('login')" id="loginBtn" class="text-lg text-purple-300">Login</button>
+                    <button onclick="toggleAuth('register')" id="registerBtn"
+                        class="text-lg text-purple-300">Register</button>
+                </div>
+                <form id="loginForm">
+                    <input type="email" placeholder="Email"
+                        class="w-full mb-4 p-2 rounded-lg bg-purple-900 text-white" />
+                    <input type="password" placeholder="Password"
+                        class="w-full mb-4 p-2 rounded-lg bg-purple-900 text-white" />
+                    <button class="btn-primary w-full">Login</button>
+                </form>
+                <form id="registerForm" class="hidden">
+                    <input type="text" placeholder="Username"
+                        class="w-full mb-4 p-2 rounded-lg bg-purple-900 text-white" />
+                    <input type="email" placeholder="Email"
+                        class="w-full mb-4 p-2 rounded-lg bg-purple-900 text-white" />
+                    <input type="password" placeholder="Password"
+                        class="w-full mb-4 p-2 rounded-lg bg-purple-900 text-white" />
+                    <button class="btn-primary w-full">Register</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="hidden">
+            <div class="max-w-5xl mx-auto space-y-6">
+                <div class="card">
+                    <h3 class="text-3xl font-semibold mb-4">📚 Saved Books</h3>
+                    <ul class="text-purple-300 space-y-2">
+                        <li>Circe</li>
+                        <li>The Midnight Library</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="text-3xl font-semibold mb-4">📈 Reading Progress</h3>
+                    <p>Track what you’ve read, want to read, or currently reading!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events -->
+        <section id="events" class="hidden">
+            <h2 class="text-4xl font-extrabold mb-6 text-center">📅 Monthly Events</h2>
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="card">
+                    <h4 class="text-2xl font-semibold mb-2">June Book Discussion</h4>
+                    <p>Date: June 25, 2025</p>
+                    <p>Join us for a live virtual meetup and discussion.</p>
+                </div>
+                <div class="card">
+                    <h4 class="text-2xl font-semibold mb-2">Author Q&A: Matt Haig</h4>
+                    <p>Date: June 30, 2025</p>
+                    <p>Ask your questions in our exclusive online forum.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-purple-900 text-purple-400 text-center p-4 mt-12">
+        &copy; 2025 Mount Caramel Book Club
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function toggleAuth(type) {
+            const login = document.getElementById('loginForm');
+            const register = document.getElementById('registerForm');
+            if (type === 'login') {
+                login.classList.remove('hidden');
+                register.classList.add('hidden');
+            } else {
+                login.classList.add('hidden');
+                register.classList.remove('hidden');
+            }
+        }
+
+        function showBookDetail(title, author, description) {
+            showSection('bookDetail');
+            document.getElementById('bookTitle').textContent = title;
+            document.getElementById('bookAuthor').textContent = `By ${author}`;
+            document.getElementById('bookDescription').textContent = description;
+
+            const images = {
+                "The Midnight Library": "https://images-na.ssl-images-amazon.com/images/I/81XRGWfoThL.jpg",
+                "Circe": "https://images-na.ssl-images-amazon.com/images/I/91trOvjL+QL.jpg",
+                "Project Hail Mary": "https://images-na.ssl-images-amazon.com/images/I/81TqNxDmyBL.jpg"
+            };
+            document.getElementById('bookImage').src = images[title] || "https://via.placeholder.com/200x300";
+        }
+    </script>
+
+</body>
+
+</html>

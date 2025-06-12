@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pixel Runner Extended</title>
+  <style>
+    /* General Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Global Styles */
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: linear-gradient(to bottom right, #111827, #1f2937);
+      color: white;
+      overflow: hidden;
+      transition: background 0.5s;
+    }
+
+    .screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .title {
+      font-size: 3rem;
+      color: #ec4899;
+      margin-bottom: 20px;
+    }
+
+    .start-btn,
+    .toggle-btn,
+    .char-btn,
+    .info-btn {
+      padding: 1rem 2rem;
+      background-color: #ec4899;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .start-btn:hover,
+    .toggle-btn:hover,
+    .char-btn:hover,
+    .info-btn:hover {
+      background-color: #db2777;
+    }
+
+    #gameCanvas {
+      background-color: black;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .ui-box {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 1.1rem;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 15px;
+      border-radius: 8px;
+    }
+
+    .gameover {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .particles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .credit-box {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Particle background layer -->
+  <canvas class="particles" id="particleCanvas"></canvas>
+
+  <!-- Landing screen -->
+  <div id="landing" class="screen">
+    <div class="title">Pixel Runner</div>
+    <div>
+      <button class="char-btn" onclick="selectCharacter('green')">Green</button>
+      <button class="char-btn" onclick="selectCharacter('blue')">Blue</button>
+      <button class="char-btn" onclick="selectCharacter('red')">Red</button>
+    </div>
+    <div>
+      <button class="start-btn" onclick="startGame()">Start Game</button>
+      <button class="toggle-btn" onclick="toggleDayNight()">Toggle Day/Night</button>
+      <button class="info-btn" onclick="showCredits()">About</button>
+    </div>
+  </div>
+
+  <!-- Game canvas -->
+  <canvas id="gameCanvas" style="display:none;"></canvas>
+  <div class="ui-box" id="scoreUI" style="display:none;">Score: 0<br>High: 0</div>
+  <div id="gameOverScreen" class="gameover" style="display:none;">
+    <h1>Game Over</h1>
+    <button onclick="resetGame()">Try Again</button>
+    <button onclick="togglePause()">Pause</button>
+  </div>
+
+  <!-- Credits -->
+  <div class="credit-box" id="credits" style="display:none;">
+    <p><strong>Pixel Runner</strong><br>Built by ChatGPT for Fun!</p>
+    <button class="info-btn" onclick="hideCredits()">Close</button>
+  </div>
+
+  <!-- Sounds -->
+  <audio id="jumpSound" src="sounds/jump.mp3"></audio>
+  <audio id="gameoverSound" src="sounds/gameover.mp3"></audio>
+  <audio id="powerupSound" src="sounds/powerup.mp3"></audio>
+
+  <!-- Game Logic -->
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const particleCanvas = document.getElementById('particleCanvas');
+    const pctx = particleCanvas.getContext('2d');
+
+    let characterColor = '#10b981';
+    let score = 0;
+    let highScore = localStorage.getItem('highScore') || 0;
+    let gameOver = false;
+    let isPaused = false;
+    let canDouble = true;
+    let nightMode = false;
+
+    let player = { x: 50, y: 300, vy: 0, color: characterColor, invincible: false };
+    let obstacles = [];
+    let powerUps = [];
+    let particles = [];
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    particleCanvas.width = canvas.width;
+    particleCanvas.height = canvas.height;
+
+    function selectCharacter(color) {
+      characterColor = color === 'green' ? '#10b981' : color === 'blue' ? '#3b82f6' : '#ef4444';
+      player.color = characterColor;
+    }
+
+    function startGame() {
+      document.getElementById('landing').style.display = 'none';
+      canvas.style.display = 'block';
+      document.getElementById('scoreUI').style.display = 'block';
+      loop();
+    }
+
+    function toggleDayNight() {
+      nightMode = !nightMode;
+      document.body.style.background = nightMode
+        ? 'linear-gradient(to bottom right, #0f172a, #1e293b)'
+        : 'linear-gradient(to bottom right, #fefce8, #fcd34d)';
+    }
+
+    function showCredits() {
+      document.getElementById('credits').style.display = 'block';
+    }
+
+    function hideCredits() {
+      document.getElementById('credits').style.display = 'none';
+    }
+
+    function togglePause() {
+      isPaused = !isPaused;
+      if (!isPaused) loop();
+    }
+
+    function resetGame() {
+      player.y = 300;
+      player.vy = 0;
+      player.invincible = false;
+      score = 0;
+      obstacles = [];
+      powerUps = [];
+      gameOver = false;
+      document.getElementById('gameOverScreen').style.display = 'none';
+      loop();
+    }
+
+    function jump() {
+      if (player.y >= canvas.height - 60 || canDouble) {
+        player.vy = -15;
+        if (player.y < canvas.height - 60) canDouble = false;
+        document.getElementById("jumpSound").play();
+      }
+    }
+
+    function spawnObstacle() {
+      obstacles.push({ x: canvas.width, w: 30, h: 60 });
+    }
+
+    function spawnPowerUp() {
+      powerUps.push({ x: canvas.width, w: 20, h: 20 });
+    }
+
+    function playSound(id) {
+      const sound = document.getElementById(id);
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    function drawParticles() {
+      pctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+      for (let i = 0; i < 50; i++) {
+        if (!particles[i]) {
+          particles[i] = {
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 2 + 1,
+            d: Math.random() * 1 + 0.5
+          };
+        }
+        let p = particles[i];
+        p.y += p.d;
+        if (p.y > canvas.height) p.y = 0;
+        pctx.beginPath();
+        pctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        pctx.fillStyle = '#ffffff80';
+        pctx.fill();
+      }
+    }
+
+    function loop() {
+      if (gameOver || isPaused) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawParticles();
+
+      ctx.fillStyle = player.invincible ? "#9333ea" : player.color;
+      ctx.fillRect(player.x, player.y, 30, 30);
+
+      player.vy += 0.8;
+      player.y += player.vy;
+      if (player.y > canvas.height - 60) {
+        player.y = canvas.height - 60;
+        player.vy = 0;
+        canDouble = true;
+      }
+
+      score++;
+      if (Math.random() < 0.02) spawnObstacle();
+      if (Math.random() < 0.005) spawnPowerUp();
+
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        let ob = obstacles[i];
+        ob.x -= 6;
+        ctx.fillStyle = "#dc2626";
+        ctx.fillRect(ob.x, canvas.height - ob.h, ob.w, ob.h);
+        if (!player.invincible &&
+          player.x < ob.x + ob.w &&
+          player.x + 30 > ob.x &&
+          player.y + 30 > canvas.height - ob.h) {
+          gameOver = true;
+          playSound("gameoverSound");
+          document.getElementById('gameOverScreen').style.display = 'block';
+          if (score > highScore) {
+            highScore = score;
+            localStorage.setItem('highScore', score);
+          }
+          return;
+        }
+      }
+
+      for (let i = powerUps.length - 1; i >= 0; i--) {
+        let pu = powerUps[i];
+        pu.x -= 4;
+        ctx.fillStyle = "#facc15";
+        ctx.beginPath();
+        ctx.arc(pu.x + 10, canvas.height - pu.h - 10, 10, 0, Math.PI * 2);
+        ctx.fill();
+        if (player.x < pu.x + pu.w &&
+          player.x + 30 > pu.x &&
+          player.y + 30 > canvas.height - pu.h - 20) {
+          playSound("powerupSound");
+          player.invincible = true;
+          powerUps.splice(i, 1);
+          setTimeout(() => player.invincible = false, 5000);
+        }
+      }
+
+      document.getElementById('scoreUI').innerHTML = "Score: " + score + "<br>High: " + highScore;
+
+      requestAnimationFrame(loop);
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.code === 'Space') jump();
+      if (e.code === 'KeyP') togglePause();
+    });
+
+    canvas.addEventListener('click', jump);
+  </script>
+</body>
+
+</html>
